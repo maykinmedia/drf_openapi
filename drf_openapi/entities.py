@@ -161,6 +161,9 @@ class OpenApiSchemaGenerator(SchemaGenerator):
         fields += view.schema.get_pagination_fields(path, method)
         fields += view.schema.get_filter_fields(path, method)
 
+        manual_fields = view.schema.get_manual_fields(path, method)
+        fields = view.schema.update_fields(fields, manual_fields)
+
         if fields and any([field.location in ('form', 'body') for field in fields]):
             encoding = view.schema.get_encoding(path, method)
         else:
